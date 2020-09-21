@@ -2,8 +2,15 @@ from django.db import models
 
 
 class Book(models.Model):
+
+    GENRES = [
+        ("F", "Fantasy"),
+        ("B", "Biografia"),
+        ("I", "Inne")
+        ]
+
     title = models.CharField(max_length=200)
-    genre = models.CharField(max_length=100)
+    genre = models.CharField(max_length=1, choices=GENRES)
     price = models.DecimalField(max_digits=8, decimal_places=2)
     author = models.CharField(max_length=100, blank=True, null=True)
     release_date = models.DateField(blank=True, null=True)
