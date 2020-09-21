@@ -11,6 +11,6 @@ class BookSerializer(serializers.ModelSerializer):
 
 
 class BookGenresSerializer(serializers.Serializer):
-    genres = serializers.ListField(
+    genres = serializers.DictField(
         child=serializers.CharField(max_length=50)
     )
