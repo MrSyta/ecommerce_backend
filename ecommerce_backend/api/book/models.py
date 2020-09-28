@@ -6,9 +6,12 @@ from django.db import models
 class Book(models.Model):
 
     GENRES = [
-        ("F", "Fantasy"),
         ("B", "Biografia"),
-        ("I", "Inne")
+        ("F", "Fantasy"),
+        ("H", "Historia"),
+        ("K", "Komiks"),
+        ("P", "Poradnik"),
+        ("I", "Inne"),
         ]
 
     def generate_filename(self, filename):
