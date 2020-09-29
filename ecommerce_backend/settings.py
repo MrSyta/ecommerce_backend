@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
-    'ecommerce_backend.api.book',
+    'ecommerce_backend.api.books',
 ]
 
 MIDDLEWARE = [
