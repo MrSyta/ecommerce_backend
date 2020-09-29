@@ -5,7 +5,7 @@ from rest_framework import status
 from rest_framework import filters
 
 from .models import Book
-from .serializers import BookSerializer, BookGenresSerializer
+from .serializers import BookSerializer
 
 
 class BookView():
@@ -25,5 +25,5 @@ class BookRetrieveUpdateDestroyView(BookView, generics.RetrieveUpdateDestroyAPIV
 
 class BookGenresView(APIView):
     def get(self, request):
-        serializer = BookGenresSerializer({"genres": {genre[0]: genre[-1] for genre in Book.GENRES}})
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        genres = {genre[0]: genre[-1] for genre in Book.GENRES}
+        return Response(genres, status=status.HTTP_200_OK)

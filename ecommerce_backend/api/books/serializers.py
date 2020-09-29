@@ -8,9 +8,3 @@ class BookSerializer(serializers.ModelSerializer):
     class Meta:
         model = Book
         fields = "__all__"
-
-
-class BookGenresSerializer(serializers.Serializer):
-    genres = serializers.DictField(
-        child=serializers.CharField(max_length=50)
-    )
