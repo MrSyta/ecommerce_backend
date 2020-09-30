@@ -15,7 +15,17 @@ class UserView():
 
 
 class UserListCreateView(UserView, generics.ListCreateAPIView):
-    pass
+    def post(self, request, format=None):
+        user = UserSerializer(data=request.data)
+        if user.is_valid():
+            user.save()
+
+            token = ObtainAuthToken().post(request)
+            user_data = user.data
+            user_data['token'] = token.data['token']
+            
+            return Response(user_data, status=status.HTTP_201_CREATED)
+        return Response(user.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserRetrieveUpdateDestroyView(UserView, generics.RetrieveUpdateDestroyAPIView):
