@@ -2,11 +2,11 @@ from rest_framework import generics
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
 
 from .models import User
 from .serializers import UserSerializer
-from rest_framework.response import Response
-from rest_framework import status
 
 
 class UserView():
@@ -23,7 +23,7 @@ class UserListCreateView(UserView, generics.ListCreateAPIView):
             token = ObtainAuthToken().post(request)
             user_data = user.data
             user_data['token'] = token.data['token']
-            
+
             return Response(user_data, status=status.HTTP_201_CREATED)
         return Response(user.errors, status=status.HTTP_400_BAD_REQUEST)
 

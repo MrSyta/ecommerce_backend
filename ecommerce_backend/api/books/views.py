@@ -6,11 +6,13 @@ from rest_framework import filters
 
 from .models import Book
 from .serializers import BookSerializer
+from .permissions import IsAdminOrReadOnly
 
 
 class BookView():
     queryset = Book.objects.all()
     serializer_class = BookSerializer
+    permission_classes = [IsAdminOrReadOnly]
 
 
 class BookListCreateView(BookView, generics.ListCreateAPIView):
