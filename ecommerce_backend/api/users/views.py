@@ -32,6 +32,15 @@ class UserRetrieveUpdateDestroyView(UserView, generics.RetrieveUpdateDestroyAPIV
     pass
 
 
+class UserMeView(APIView):
+    def get(self, request, format=None):
+        if my_id := request.user.id:
+            me = User.objects.get(id=my_id)
+            return Response(UserSerializer(me).data, status=status.HTTP_200_OK)
+        else:
+            return Response("Unauthorized", status=status.HTTP_401_UNAUTHORIZED)
+
+
 class UserLoginView(APIView):
     serializer_class = AuthTokenSerializer
 
