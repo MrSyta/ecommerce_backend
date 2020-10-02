@@ -2,7 +2,8 @@ from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework import filters
+from rest_framework.filters import SearchFilter, OrderingFilter
+from django_filters.rest_framework import DjangoFilterBackend
 
 from .models import Book
 from .serializers import BookSerializer
@@ -16,7 +17,8 @@ class BookView():
 
 
 class BookListCreateView(BookView, generics.ListCreateAPIView):
-    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    filter_backends = [SearchFilter, OrderingFilter, DjangoFilterBackend]
+    filterset_fields = ['genre']
     search_fields = ['title', 'author']
     ordering_fields = ["release_date", "price"]
 
