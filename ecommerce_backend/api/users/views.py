@@ -1,12 +1,12 @@
 from rest_framework import generics
 from rest_framework.authtoken.serializers import AuthTokenSerializer
-from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
 from .models import User
 from .serializers import UserSerializer
+from.auth_token import CustomAuthToken
 
 
 class UserView():
@@ -20,7 +20,7 @@ class UserListCreateView(UserView, generics.ListCreateAPIView):
         if user.is_valid():
             user.save()
 
-            token = ObtainAuthToken().post(request)
+            token = CustomAuthToken().post(request)
             user_data = user.data
             user_data['token'] = token.data['token']
 
@@ -32,6 +32,19 @@ class UserRetrieveUpdateDestroyView(UserView, generics.RetrieveUpdateDestroyAPIV
     pass
 
 
+class UserLoginView(APIView):
+    serializer_class = AuthTokenSerializer
+
+    def post(self, request):
+        return CustomAuthToken().post(request)
+
+
+class UserLogoutView(APIView):
+    def get(self, request, format=None):
+        request.user.auth_token.delete()
+        return Response(status=status.HTTP_200_OK)
+
+
 class UserMeView(APIView):
     def get(self, request, format=None):
         if my_id := request.user.id:
@@ -39,16 +52,3 @@ class UserMeView(APIView):
             return Response(UserSerializer(me).data, status=status.HTTP_200_OK)
         else:
             return Response("Unauthorized", status=status.HTTP_401_UNAUTHORIZED)
-
-
-class UserLoginView(APIView):
-    serializer_class = AuthTokenSerializer
-
-    def post(self, request):
-        return ObtainAuthToken().post(request)
-
-
-class UserLogoutView(APIView):
-    def get(self, request, format=None):
-        request.user.auth_token.delete()
-        return Response(status=status.HTTP_200_OK)
