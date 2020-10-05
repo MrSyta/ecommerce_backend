@@ -7,7 +7,7 @@ class User(AbstractUser):
     email = models.EmailField(max_length=50, unique=True)
 
     class Meta:
-        db_table = "users"
+        ordering = ['date_joined']
 
     def __str__(self):
         return self.username
