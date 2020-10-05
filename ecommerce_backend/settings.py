@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'ecommerce_backend.api.books',
     'ecommerce_backend.api.users',
-    'ecommerce_backend.api.orders'
+    'ecommerce_backend.api.orders',
+    'ecommerce_backend.api.order_items',
 ]
 
 AUTH_USER_MODEL = 'users.User'
