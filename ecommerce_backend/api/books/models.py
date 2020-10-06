@@ -30,7 +30,6 @@ class Book(models.Model):
 
     class Meta:
         ordering = ['title']
-        db_table = 'books'
 
     def __str__(self):
         return self.title
